@@ -1,0 +1,328 @@
+{% extends '../../base.html' %} {% load static %} {% block title %}{{single_product.name}}{% endblock %} {% block content %}
+
+<div style="background: white; " class="pages-title section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="pages-title-text text-center">
+
+                    <h2 style="color: black; ">{{single_product.name}}</h2>
+
+                    <ul class="text-left" style="margin-top: -30px;">
+                        <li><a style="color:black" href="\">Home </a></li>
+                        <li style="color:black"><span> // </span><a style="color:black" href="{% url 'shop:shop' %}">shop </a></li>
+                        <li style="color:black"><span> // </span>{{single_product.category}}</li>
+                        <li style="color:black"><span> // </span>{{single_product.name}}</li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- pages-title-end -->
+
+<!-- product-details-section-start -->
+<div style="background:#f5f5f5; margin-top: 50px; margin-bottom: 40px; box-shadow: 0 0 10px black;" class="product-details pages section-padding-top">
+    <div class="container">
+        <div class="row">
+            <div style="font-size:18px;">
+
+                {% include "includes/alerts.html" %}
+
+                <div>
+                    <div class="single-list-view" style="margin-top: -30px;">
+
+                        <div class="col-xs-12 col-sm-5 col-md-4">
+                            <div class="quick-image">
+
+                                <div class="single-quick-image text-center">
+                                    <div class="list-img">
+                                        <div class="product-img tab-content">
+
+                                            <div class="simpleLens-container tab-pane active fade in mainImage">
+                                                <a class="simpleLens-image" data-lens-image="{{single_product.image.url}}" href="#"><img style="border-radius:10px;" src="{{single_product.image.url}}" alt="" class="simpleLens-big-image"></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="quick-thumb">
+
+                                    <ul class="product-slider thumb">
+
+                                        <li>
+                                            <a href="{{ single_product.image.url }}" data-lens-image="{{single_product.image.url}}" target="mainImage"><img style="width:85px; height:100px; border-radius:10px" src="{{single_product.image.url}}" alt="quick view" /></a>
+                                        </li>
+
+                                        {% for i in product_gallery %}
+
+                                        <li>
+                                            <a href="{{i.image.url}}" data-lens-image="{{i.image.url}}" target="mainImage"><img style="width:85px; height:100px; border-radius:10px" src="{{i.image.url}}" alt="quick view" /></a>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-7 col-md-8">
+                            <div class="quick-right">
+                                <div style="border-radius:10px; background-color: #f2f2fc; box-shadow: 0 0 3px black;" class="list-text">
+
+                                    <h3 style="color:black; font-size: 30px; font-weight: 500;">{{single_product.name}}</h3>
+
+                                    <h5 style="color: black;">{% if single_product.discount != 0.00 %}<del>${{single_product.discount}}</del>{% endif %}
+
+                                        <div class="ratting floatright">
+                                            <p style="font-size:22px; padding-top: 3px;">( {{single_product.countReview}} Rating )</p>
+                                            <div style="float:right; font-size:1.5rem" class="rating-star">
+                                                <span>
+                                                <i class="fa fa-star{% if single_product.averageRating < 0.5 %}-o{% elif single_product.averageRating >= 0.5 and single_product.averageRating < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if single_product.averageRating < 1.5 %}-o{% elif single_product.averageRating >= 1.5 and single_product.averageRating < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if single_product.averageRating < 2.5 %}-o{% elif single_product.averageRating >= 2.5 and single_product.averageRating < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if single_product.averageRating < 3.5 %}-o{% elif single_product.averageRating >= 3.5 and single_product.averageRating < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if single_product.averageRating < 4.5 %}-o{% elif single_product.averageRating >= 4.5 and single_product.averageRating < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        ${{single_product.price}}</h5>
+
+                                    <p style="line-height: 33px; font-size: 23px;">{{single_product.description}}.</p>
+
+                                    <form action="{% url 'cart:add_cart' single_product.id %}" method="POST">
+
+                                        {% csrf_token %}
+
+                                        <div class="all-choose">
+
+                                            {% if single_product.variation_set.colors %}
+                                            <div class="col-xs-12 col-sm-7 col-md-5 s-shoose" style="margin-right:40px;">
+                                                <p style="font-size:20px; margin-bottom:5px;">Color</p>
+                                                <select name="color" class="form-control" required>
+                                                {% for x in single_product.variation_set.colors %}
+
+                                                <option value="{{x.variation_value|lower}}"
+                                                {% if forloop.first %}selected{% endif %}>
+                                                {{x.variation_value|capfirst}}
+                                                </option>
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                            {% endif %} {% if single_product.variation_set.sizes %}
+
+                                            <div class="col-xs-12 col-sm-7 col-md-5 s-shoose ml-3" style="margin-bottom: 50px;">
+
+                                                <p style="font-size:20px; margin-bottom:5px;">Size</p>
+
+                                                <select name="size" class="form-control" required>
+
+                                                    <option value="" disabled selected>Select</option>
+                                                    {% for x in single_product.variation_set.sizes %}
+                                                    <option value="{{x.variation_value|lower}}">{{x.variation_value|capfirst}}</option>
+                                                    {% endfor %}
+                                                    
+                                                </select>
+
+                                            </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                        {% if single_product.stock > 0 %}
+                                        <div class="list-btn floatright">
+                                            <button type="submit" class="btn" style="background: linear-gradient(270deg, #DA7C25 15%, #B923E1 100%); color:white; font-size:18px; margin-top: -50px; margin-bottom: 50px;">
+                                                <b>Add to cart <i class="mdi mdi-cart-outline"></i></b>
+                                            </button>
+                                        </div>
+                                        {% else %}
+                                        <div class="alert alert-info text-center" style="font-size:18px;" role="alert">
+                                            <b>This Product is Not In Stock Now, Try Later</b>
+                                        </div>
+                                        {% endif %}
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- single-product item end -->
+
+                <!-- reviews area start -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div style="border-radius:10px; margin-bottom: 30px; background-color: #f2f2fc; box-shadow: 0 0 3px black;" class="reviews padding60 margin-top">
+
+                            <ul class="reviews-tab clearfix">
+
+                                <li class="active"><a style="font-size:30px;color:black" data-toggle="tab" href="#reviews">Rate and review</a></li>
+
+                            </ul>
+
+                            <div class="tab-content">
+
+                                <div class="info-reviews review-text tab-pane fade in active" id="reviews">
+                                    <div>
+                                        <form action="{% url 'shop:review' single_product.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="your-rating log-title">
+
+                                                <h5 style="color: black;">Product rating</h5>
+                                                <!-- Stars Review -->
+                                                <div class="rate">
+                                                    <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+                                                    <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+                                                    <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+                                                    <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
+                                                    <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+                                                    <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+                                            <div class="custom-input">
+                                                <div class="row">
+
+                                                    <div class="col-xs-12">
+
+                                                        <div class="custom-mess">
+                                                            <textarea style="border:2px solid black; background-color: white; color: rgb(55, 53, 53); font-size: 18px;" class="form-control" name="review" placeholder="Review..." rows="2"></textarea>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-xs-12"><br>
+                                                        <div class="submit-text">
+
+                                                            {% if user.is_authenticated %} {% if orderproduct %}
+
+                                                            <!--<input style="width:20%;float:right;margin-button:20px" type="submit" value="Post Review" class="btn btn-warning">-->
+
+                                                            <button type="submit" class="btn btn-warning" style="background:#f4cca4;color:#1c1427; font-size:18px;float: right;"><b>submit
+																	review </b></button> {% else %}
+
+                                                            <div style="font-size:18px;margin-top:10px;width: 75%;" class="container alert alert-info text-center" role="alert">
+                                                                You must buy this product to review on it!
+                                                            </div>
+
+                                                            {% endif %} {% else %}
+
+                                                            <div style="font-size:18px;margin-top:10px;width: 75%;" class="container alert alert-info text-center" role="alert">
+                                                                You must login to rate and review,<a style="background:none; color:#000; margin-left: -25px;" href="{% url 'accounts:login' %}">Login</a>
+                                                            </div>
+
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <br>
+                                    <br>
+
+                                    <hr>
+
+                                    <div class="about-author">
+
+                                        <h3 class="text-center" style="color: black">Customer rating</h3><br> {% if reviews %} {% for review in reviews %}
+
+                                        <div style="background:white; padding:20px; border-radius:15px" class="autohr-text ">
+
+                                            <img style="width:50px; height:50px; border-radius:50%" src="{{review.user.userprofile.profile_picture.url}}" class="img-xs icon rounded-circle">
+
+                                            <div class="author-des">
+                                                <span style="color:black; float:right; font-size:14px">{{review.update_at}}</span>
+                                                <h4 style="color:black">{{review.user.full_name}}</h4>
+
+
+                                                <div class="rating-star">
+                                                    <span>
+														<i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}"
+															aria-hidden="true"></i>
+														<i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}"
+															aria-hidden="true"></i>
+														<i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}"
+															aria-hidden="true"></i>
+														<i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}"
+															aria-hidden="true"></i>
+														<i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}"
+															aria-hidden="true"></i>
+													</span>
+                                                </div><br>
+
+                                                <p style="font-size:18px;margin-top:15px">{{review.review}}</p>
+                                            </div>
+
+                                        </div>
+
+                                        <hr /> {% endfor %} {% else %}
+                                        <br>
+
+                                        <div style="font-size:16px" class="alert alert-info text-center" role="alert">
+                                            Be First Reviewer!
+                                        </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const adjustContainerHeights = () => {
+            const containers = document.querySelectorAll(".list-text");
+
+            containers.forEach(container => {
+                // Reset height first
+                container.style.height = "auto";
+
+                // Get content height
+                const contentHeight = container.scrollHeight;
+
+                // Set container height to fit content
+                container.style.height = contentHeight + "px";
+            });
+        };
+
+        // Run once after DOM load
+        adjustContainerHeights();
+
+        // Optional: Re-adjust on window resize
+        window.addEventListener("resize", adjustContainerHeights);
+    });
+</script>
+
+
+{% endblock %}

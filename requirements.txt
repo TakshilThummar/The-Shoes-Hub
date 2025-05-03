@@ -1,0 +1,5 @@
+django
+django_storages
+django_admin_thumbnails
+boto3
+Pillow

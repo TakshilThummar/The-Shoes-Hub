@@ -1,0 +1,432 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Shop{% endblock %} {% block content %}
+
+<!-- header section end -->
+<!-- pages-title-start -->
+<div style="background: white;" class="pages-title section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="pages-title-text text-center">
+
+                    {% if category_slug != None %}
+
+                    <h2 style="color: black;text-transform: capitalize;">{{category_slug}}</h2>
+
+                    {% else %}
+
+                    <h2 style="color:black;text-transform: capitalize;">All Products</h2>
+
+                    {% endif %}
+
+                    <ul class="text-left" style="color: black; margin-top: -40px; margin-bottom: 30px;">
+                        <li><a href="\" style="color: black;">Home </a></li>
+                        <li style="color: black "><span> // </span>Shop</li>
+                        {% if category_slug != None %}
+                        <li style="color:black "><span> // </span>{{category_slug}}</li>
+                        {% endif %}
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<!-- pages-title-end -->
+<!-- collection section start -->
+
+<!-- collection section end -->
+<!-- product-grid-view content section start -->
+<section style="background: #f5f5f5; padding-top: 30px; margin-bottom: 40px; box-shadow: 0 0 10px black;" class="pages products-page section-padding-bottom ">
+    <div class="container ">
+        <div class="row "><br>
+
+            <div class="col-xs-12 col-sm-4 col-md-3 ">
+                <div class="sidebar left-sidebar ">
+                    <div style="background:white; color: black;;border-radius:20px 20px 0 0; box-shadow: 0 0 3px black;" class="s-side-text ">
+
+                        <div class="sidebar-title clearfix text-center ">
+                            <h3>Categories</h3>
+                        </div>
+
+                        <div class="sidebar-title clearfix ">
+                            <h4 class="floatleft "><a style="font-weight:600;color: rgb(87, 85, 85) " href="{% url 'shop:shop' %} ">All</a></h4>
+                        </div>
+
+                        {% for category in categories %}
+
+                        <div class="sidebar-title clearfix ">
+                            <h4 class="floatleft "><a style="font-weight:600;color: rgb(87, 85, 85) " href="{{ category.get_category_slug_url }} ">{{category.name}}</a></h4>
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-8 col-md-9 ">
+                <div class="right-products ">
+
+                    <div class="row ">
+                        <div class="col-xs-12 ">
+
+                            <div style="background: white; box-shadow: 0 0 3px black; border-radius:10px; " class="section-title clearfix ">
+
+                                <ul>
+                                    <li>
+                                        <ul class="nav-view ">
+
+                                            <li class="active ">
+                                                <a data-toggle="tab " href="#grid "> <i style="color:rgb(87, 85, 85) " class="mdi mdi-view-module "></i> </a>
+                                            </li>
+
+                                            <li>
+                                                <a data-toggle="tab " href="#list "> <i style="color:rgb(87, 85, 85) " class="mdi mdi-view-list "></i> </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+
+                                    <li style="color: black; font-size:20px " class="sort-by floatright ">
+                                        {{products_count}} Results
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="tab-content grid-content ">
+
+                            <div class="tab-pane fade in active text-center " id="grid ">
+
+                                {% for product in products %}
+
+                                <div class="col-xs-12 col-sm-6 col-md-4 ">
+                                    <div style="background: #f2f2fc; ;border-radius:15px; margin-bottom: 40px;" class="single-product ">
+                                        <div class="product-img ">
+                                            {% if product.discount != 0.00 %}
+                                            <div class="pro-type ">
+                                                <span>Discount</span>
+                                            </div>
+                                            {% endif %} {% if product.new %}
+                                            <div style="background:#1c1427;color:#f4cca4 " class="pro-type ">
+                                                <span>New</span>
+                                            </div>
+                                            {% endif %}
+                                            <a href="{{product.get_prodcut_details_url}} "><img style="width:100%; height:350px;;border-radius:15px 15px 0 0; " src="{{product.image.url}} " alt="Product Title " /></a>
+                                            <div class="actions-btn ">
+                                                <a style="margin-left:20px " href="{% url 'cart:add_cart' product.id %} "><i class="mdi mdi-cart "></i></a>
+                                                <a href="{{product.get_prodcut_details_url}} "><i class="mdi mdi-eye "></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-dsc ">
+
+                                            <p><a style="color: black; line-height: 30px;" href="{{product.get_prodcut_details_url}} ">{{product.name}}</a></p>
+                                            <span>${{product.price}}</span><br><br>
+                                            <span>${{product.description}}</span><br><br>
+                                            <div style="font-size:16px " class="rating-star ">
+                                                <span>
+														<i class="fa fa-star{% if product.averageRating < 0.5 %}-o{% elif product.averageRating>= 0.5 and product.averageRating
+                                                        < 1 %}-half-o {% endif %} " aria-hidden="true "></i>
+														<i class="fa fa-star{% if product.averageRating < 1.5 %}-o{% elif product.averageRating>= 1.5 and product.averageRating
+                                                        < 2 %}-half-o {% endif %} " aria-hidden="true "></i>
+														<i class="fa fa-star{% if product.averageRating < 2.5 %}-o{% elif product.averageRating>= 2.5 and product.averageRating
+                                                        < 3 %}-half-o {% endif %} " aria-hidden="true "></i>
+														<i class="fa fa-star{% if product.averageRating < 3.5 %}-o{% elif product.averageRating>= 3.5 and product.averageRating
+                                                        < 4 %}-half-o {% endif %} " aria-hidden="true "></i>
+														<i class="fa fa-star{% if product.averageRating < 4.5 %}-o{% elif product.averageRating>= 4.5 and product.averageRating
+                                                        < 5 %}-half-o {% endif %} " aria-hidden="true "></i>
+														&nbsp;<span style="font-size: 20px; color: rgb(87, 85, 85); ">(<b>{{product.countReview}}</b> reviews)</span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                            <div class="tab-pane fade in " id="list ">
+                                {% for product in products %}
+                                <div class="col-xs-12 ">
+                                    <div class="single-list-view ">
+                                        <div style="width:100%; height:350px " class="row ">
+                                            <div class="col-xs-12 col-md-4 ">
+                                                <div class="list-img ">
+                                                    <div class="product-img ">
+                                                        {% if product.discount != 0.00 %}
+                                                        <div class="pro-type ">
+                                                            <span>Discount</span>
+                                                        </div>
+                                                        {% endif %}
+                                                        <a href="{{product.get_prodcut_details_url}} "><img style="width:100%; height:350px; border-radius:20px 0 0 20px; " src="{{product.image.url}} " alt="Product Title " /></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-8 ">
+                                                <div style="height:350px; border-radius:0 20px 20px 0; " class="list-text ">
+
+                                                    <div style="font-size:16px " class="rating-star floatright ">
+                                                        <span>
+																<i class="fa fa-star{% if product.averageRating < 0.5 %}-o{% elif product.averageRating>= 0.5 and product.averageRating
+                                                < 1 %}-half-o {% endif %} " aria-hidden="true "></i>
+																<i class="fa fa-star{% if product.averageRating < 1.5 %}-o{% elif product.averageRating>= 1.5 and product.averageRating
+                                                    < 2 %}-half-o {% endif %} " aria-hidden="true "></i>
+																<i class="fa fa-star{% if product.averageRating < 2.5 %}-o{% elif product.averageRating>= 2.5 and product.averageRating
+                                                        < 3 %}-half-o {% endif %} " aria-hidden="true "></i>
+																<i class="fa fa-star{% if product.averageRating < 3.5 %}-o{% elif product.averageRating>= 3.5 and product.averageRating
+                                                            < 4 %}-half-o {% endif %} " aria-hidden="true "></i>
+																<i class="fa fa-star{% if product.averageRating < 4.5 %}-o{% elif product.averageRating>= 4.5 and product.averageRating
+                                                                < 5 %}-half-o {% endif %} " aria-hidden="true "></i>
+																&nbsp;<span style="font-size:16px ">(<b>{{product.countReview}}</b> reviews)</span>
+                                                        </span>
+                                                    </div>
+                                                    <h3 style="color:#d99879 ">{{product.name}}</h3>
+                                                    <h5>{% if product.discount != 0.00 %}<del>${{product.discount}}</del>{% endif %} ${{product.price}}</h5>
+                                                    <p>{{product.description}}.</p>
+                                                    <div class="list-btn ">
+
+                                                        <a href="{{product.get_prodcut_details_url}} " class="btn btn-warning " style="background:none; color:#f4cca4 ">View Details <i class="mdi mdi-eye "></i></a>
+                                                        <a href="{% url 'cart:add_cart' product.id %} " class="btn " style="color:#1c1427;background:#f4cca4 ">add to cart <i class="mdi mdi-cart-outline "></i></a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-sm-12 ">
+                            <div style="background: linear-gradient(270deg, #DA7C25 15%, #B923E1 100%); border-radius: 10px;" class="pagnation-ul ">
+                                {% if products.has_other_pages %}
+                                <ul class="clearfix ">
+                                    {% if products.has_previous %}
+                                    <li><a href="?page={{products.previous_page_number}} "><i style="color: white; font-weight: 800; font-size: 25px;" class="mdi mdi-arrow-left-bold "></i></a></li>
+                                    {% else %}
+                                    <li><a href="# " style="color: rgb(219, 213, 213); font-weight: 800; font-size: 20px;"><i class="mdi mdi-arrow-left-bold "></i></a></li>
+                                    {% endif %} {% for x in products.paginator.page_range %} {% if products.number == x %}
+                                    <li><a href="# " style="color: rgb(219, 213, 213); font-weight: 800; font-size: 20px;">{{x}}</a></li>
+                                    {% else %}
+                                    <li><a style="color:white; font-weight: 800; font-size: 20px;" href="?page={{x}} ">{{x}}</a></li>
+                                    {% endif %} {% endfor %} {% if products.has_next %}
+                                    <li><a href="?page={{products.next_page_number}} "><i style="color: white; font-weight: 800; font-size: 25px;" class="mdi mdi-arrow-right-bold "></i></a></li>
+                                    {% else %}
+                                    <li><a href="# " style="color: rgb(219, 213, 213); font-weight: 800; font-size: 25px;"><i class="mdi mdi-arrow-right-bold "></i></a></li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pagination = document.querySelector(".pagnation-ul ul");
+        if (!pagination) return;
+
+        const pageLinks = pagination.querySelectorAll("li > a");
+        let currentPage = null;
+        let lastPage = null;
+
+        // Identify current page (non-clickable with page number)
+        pageLinks.forEach(link => {
+            const pageNum = parseInt(link.textContent.trim());
+            if (!isNaN(pageNum)) {
+                if (link.getAttribute("href") === "#") {
+                    currentPage = pageNum;
+                }
+                lastPage = pageNum;
+            }
+        });
+
+        // Fully disable a link (prevent click and style)
+        function disableLink(link) {
+            if (link) {
+                link.removeAttribute("href");
+                link.style.pointerEvents = "none";
+                link.style.opacity = "0.5";
+                link.style.cursor = "default";
+            }
+        }
+
+        // Disable left arrow and page 1 if on the first page
+        if (currentPage === 1) {
+            const leftArrow = pagination.querySelector("li:first-child a");
+            const firstPage = Array.from(pageLinks).find(a => a.textContent.trim() == "1");
+            disableLink(leftArrow);
+            disableLink(firstPage);
+        }
+
+        // Disable right arrow and last page if on the last page
+        if (currentPage === lastPage) {
+            const rightArrow = pagination.querySelector("li:last-child a");
+            const lastPageLink = Array.from(pageLinks).find(a => a.textContent.trim() == String(lastPage));
+            disableLink(rightArrow);
+            disableLink(lastPageLink);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const descriptions = document.querySelectorAll('.product-dsc span, .list-text p');
+
+        descriptions.forEach(desc => {
+            desc.style.overflow = 'hidden';
+            desc.style.display = '-webkit-box';
+            desc.style.webkitLineClamp = '4'; // Limit to 4 lines
+            desc.style.webkitBoxOrient = 'vertical';
+            desc.style.textOverflow = 'ellipsis';
+            desc.style.lineHeight = '1.4em';
+            desc.style.maxHeight = '5.6em'; // 4 lines * 1.4em
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titleElements = document.querySelectorAll('.product-dsc p a, .list-text h3');
+
+        // Step 1: Measure line count for each title
+        let maxLines = 0;
+        titleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxLines) {
+                maxLines = lines;
+            }
+        });
+
+        // Step 2: Set all titles to the same height (max lines) and center content
+        titleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const blogPosts = document.querySelectorAll('.blog-post');
+        const blogTitleElements = document.querySelectorAll('.s-blog-text h4 a');
+
+        let maxTitleLines = 0;
+        let maxBlogHeight = 0;
+
+        // Step 1: Determine max lines in any title
+        blogTitleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxTitleLines) {
+                maxTitleLines = lines;
+            }
+        });
+
+        // Step 2: Set all titles to same height and center text
+        blogTitleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxTitleLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+
+        // Step 3: Determine the tallest blog card
+        blogPosts.forEach(post => {
+            const height = post.offsetHeight;
+            if (height > maxBlogHeight) {
+                maxBlogHeight = height;
+            }
+        });
+
+        // Step 4: Set all blog cards to same height
+        blogPosts.forEach(post => {
+            post.style.height = maxBlogHeight + 'px';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const productCards = document.querySelectorAll('.featured-product');
+        const productTitles = document.querySelectorAll('.product-dsc p:first-child a');
+
+        let maxTitleLines = 0;
+        let maxCardHeight = 0;
+
+        // Step 1: Find max lines used by any title
+        productTitles.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxTitleLines) maxTitleLines = lines;
+        });
+
+        // Step 2: Force all titles to use same height + center
+        productTitles.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxTitleLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+
+        // Step 3: Set same height for all product cards
+        productCards.forEach(card => {
+            const height = card.offsetHeight;
+            if (height > maxCardHeight) maxCardHeight = height;
+        });
+
+        productCards.forEach(card => {
+            card.style.height = maxCardHeight + 'px';
+        });
+    });
+</script>
+
+
+{% endblock content %}

@@ -1,0 +1,284 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Contact{% endblock %} {% block content %}
+<!-- header section end -->
+
+<!-- pages-title-start -->
+<div class="pages-title section-padding">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xs-12">
+                <div class="pages-title-text text-center">
+
+                    <h2 style="color: black;text-transform: capitalize;">Contact</h2>
+
+                    <ul class="text-left" style="margin-top: -30px; margin-bottom: 40px;">
+
+                        <li><a href="\" style="color: black">Home </a></li>
+                        <li style="color: black"><span> // </span>Contact</li>
+                        {% if category_slug != None %}
+                        <li style="color: black"><span> // </span>{{category_slug}}</li>
+                        {% endif %}
+
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+<!-- pages-title-end -->
+
+<!-- product-grid-view content section start -->
+<!-- <section style="background:#1c1427" class="pages products-page section-padding-bottom">
+
+    <div class="container">
+
+        <div class="row"><br>
+
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <div class="sidebar left-sidebar">
+
+                    <p class="mb-5" style="margin-top: revert; text-align: justify; line-height: 2rem">
+                        Have questions or need help with your order? Our dedicated support team is here to assist you with any inquiries you may have. Whether you need help tracking an order, have questions about a product, or need assistance with a return, we're here to help.
+                        Don't hesitate to reach out to us anytime!
+                    </p>
+                    <ul class="contact-info list-unstyled pl-md-5 mb-5">
+                        <li class="d-flex text-black mb-2">
+                            <span class="mr-3"><i class="fas fa-map-marker-alt"></i></span> Junagadh, Gujarat, India
+                        </li>
+                        <li class="d-flex text-black mb-2">
+                            <span class="mr-3"><i class="fas fa-phone"></i></span> +91 9512x xxxxx
+                        </li>
+                        <li class="d-flex text-black">
+                            <span class="mr-3"><i class="fas fa-envelope"></i></span>
+                            <a href="mailto:eshop123@gmail.com">eshop123@gmail.com</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-8 col-md-9">
+
+                <form method="POST" action="https://formspree.io/f/{{ form_id }}" class="mb-5">
+                    {% csrf_token %} {% include "includes/alerts.html" %}
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="name" class="col-form-label">First Name</label>
+                            <input type="text" class="form-control" name="first-name" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="name" class="col-form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last-name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input type="text" class="form-control" name="email" required />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label for="message" class="col-form-label">Message</label
+                        ><textarea
+                          class="form-control"
+                          name="message"
+                          cols="30"
+                          rows="7"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input
+                          type="submit"
+                          value="Send Message"
+                          class="btn btn-primary rounded-0 py-2 px-4"
+                        /><span class="submitting"></span>
+                      </div>
+                    </div>
+                  </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section> -->
+
+
+<!-- <section class="section-content padding-bottom" style="background-color: #f5f5f5; box-shadow: 0 0 7px black; margin-bottom: 40px; align-items: center; justify-content: center;">
+    <div class="mx-auto" style="max-width: 85rem; margin-top: 50px; align-items: center; justify-content: center;">
+        <div class="container">
+            <div class="row" style="margin-top: 50px; margin-bottom: 50px; align-items: center; justify-content: center;">
+
+                <div class="col-md-5 mr-auto">
+
+                    <p class="mb-5" style="text-align: justify; line-height: 40px; font-size: 30px; align-items: center; justify-content: center;">
+                        Have questions or need help with your order? Our dedicated support team is here to assist you with any inquiries you may have. Whether you need help tracking an order, have questions about a product, or need assistance with a return, we're here to help.
+                        Don't hesitate to reach out to us anytime!
+                    </p>
+
+                    <ul class="contact-info list-unstyled" style="font-size: 25px; color: black; margin-top: 20px;">
+
+                        <li class="d-flex text-black mb-2">
+                            <span class="mr-3"><i class="fas fa-map-marker-alt"></i></span> Junagadh, Gujarat, India
+                        </li>
+
+                        <li class="d-flex text-black mb-2">
+                            <span class="mr-3"><i class="fas fa-phone"></i></span> +91 6352470455
+                        </li>
+
+                        <li class="d-flex text-black">
+                            <span class="mr-3"><i class="fas fa-envelope"></i></span>
+                            <a href="mailto:contact@theshoeshub.com" style="color: black;">contact@theshoeshub.com</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-md-6" style="font-size: 27px; color: rgb(104, 102, 102);">
+
+                    <form method="POST" action="https://formspree.io/f/{{ form_id }}" class="mb-5">
+
+                        {% csrf_token %} {% include "includes/alerts.html" %}
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="name" class="col-form-label">First Name</label>
+                                <input type="text" class="form-control" name="first-name" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="name" class="col-form-label">Last Name</label>
+                                <input type="text" class="form-control" name="last-name" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" name="email" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="message" class="col-form-label">Message</label>
+                                <textarea class="form-control" name="message" cols="30" rows="7"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button value="Send Message" class="btn btn-primary rounded-0 py-2 px-4" style="border: none; font-size: 25px; font-weight: 800; background: linear-gradient(270deg, #DA7C25 10%, #B923E1 100%);">Submit</button><span class="submitting"></span>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="section-content padding-bottom" style="background-color: #f5f5f5; box-shadow: 0 0 7px black; margin-bottom: 40px; align-items: center; justify-content: center;">
+
+    <!-- Centered Wrapper -->
+    <div style="max-width: 1200px; width: 100%; margin: 0 auto; padding-top: 10px;">
+
+        <div class="row text-center" style=" display: flex;  flex-wrap: wrap; justify-content: space-between; align-items: flex-start; margin-top: 40px;">
+
+            <!-- Left Side -->
+            <div class="left" style="flex: 1 1 45%; max-width: 45%; padding: 20px; text-align: left;">
+
+                <p class="mb-5" style="text-align: justify; line-height: 40px; font-size: 30px; color: black;">
+                    Have questions or need help with your order? Our dedicated support team is here to assist you with any inquiries you may have. Whether you need help tracking an order, have questions about a product, or need assistance with a return, we're here to help.
+                    Don't hesitate to reach out to us anytime!
+                </p>
+
+                <ul class="contact-info list-unstyled" style="font-size: 25px; color: rgb(80, 77, 77); margin-top: 20px; list-style: none; padding: 0; flex: 1 1 1 33.33%;">
+
+                    <li class="d-flex text-black mb-2" style="margin-bottom: 10px; width: 100%;">
+                        <span class="mr-3"><i class="fas fa-map-marker-alt"></i></span> Junagadh, Gujarat, India
+                    </li>
+                    <li class="d-flex text-black mb-2" style="margin-bottom: 10px;">
+                        <span class="mr-3"><i class="fas fa-phone"></i></span> +91 6352470455
+                    </li>
+                    <li class="d-flex text-black">
+                        <span class="mr-3"><i class="fas fa-envelope"></i></span>
+                        <a href="mailto:contact@theshoeshub.com" style="color: rgb(80, 77, 77); text-transform: lowercase;">contact@theshoeshub.com</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="right" style="flex: 1 1 45%; max-width: 45%; padding: 20px;">
+                <div class="col-md-12" style="font-size: 27px; color: rgb(104, 102, 102);">
+                    <form method="POST" action="https://formspree.io/f/{{ form_id }}" class="mb-5" style="text-align: left;">
+                        {% csrf_token %} {% include "includes/alerts.html" %}
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="name" class="col-form-label">First Name</label>
+                                <input type="text" class="form-control" name="first-name" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="name" class="col-form-label">Last Name</label>
+                                <input type="text" class="form-control" name="last-name" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" name="email" required />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="message" class="col-form-label">Message</label>
+                                <textarea class="form-control" name="message" cols="30" rows="7"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button value="Send Message" class="btn btn-primary rounded-0 py-2 px-4" style="border: none; font-size: 25px; font-weight: 800; background: linear-gradient(270deg, #DA7C25 10%, #B923E1 100%); color: white;">Submit</button>
+                                <span class="submitting"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock content %}

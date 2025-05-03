@@ -1,0 +1,109 @@
+{% extends '../../../base.html' %} {% load static %} {% block title %}Dashboard{% endblock title %} {% block content %}
+
+<div class="pages-title section-padding" style="margin-bottom:30px;">
+    <div class="container">
+        <div style="background: white" class="row">
+            <div class="col-xs-12">
+                <div class="pages-title-text text-center">
+
+                    <h2 style="color: black">dashboard</h2>
+
+                    <ul class="text-left" style="margin-top: -30px; margin-bottom: 40px;">
+                        <li><a style="color: black" href="\">Home </a></li>
+                        <li style="color: black"><span> // </span>Dashboard</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section style="margin-bottom:40px; background: #f5f5f5; padding-top: 70px; box-shadow: 0 0 10px black;" class="section-conten padding-y bg">
+
+    <br><br>
+
+    <div class="container">
+        <div class="row">
+
+            <span class="font-size:23px"><b> {% include "includes/alerts.html" %} </b></span> {% include "includes/dashboard_slider.html" %}
+
+            <main style="background: #f2f2fc; box-shadow: 0 0 3px black; border-radius:10px" class="col-md-9">
+
+                <article class="card">
+
+                    <br>
+
+                    <header class="card-header text-center">
+                        <span style="font-size: 25px; color: black;" class="d-inline-block">Logged in as :</span>
+                        <strong style="font-size:25px; color: black;">{{user.full_name | title}}</strong>
+                    </header>
+
+                    <hr>
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="card" style="text-align:center; background: white; border-radius:7px; margin-bottom:10px">
+
+                                    <div style="font-size:18px; padding:10px" class="card-body">
+
+                                        {% if profile.profile_picture %}
+                                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="100" style="border-radius:50px;"> {% else %}
+                                        <img src="/static/images/default-avatar.png" alt="Default Profile" width="100" style="border-radius:50px;"> {% endif %}
+
+                                        <br>
+                                        <br>
+
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>User Name :</b></span> <span style="float:right">{{user.username}}</span></p><br>
+                                        <hr>
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>Email :</b></span> <span style="float:right">{{user.email}}</span></p><br>
+                                        <hr>
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>Phone Number :</b></span> <span style="float:right">{{user.Phone_number}}</span></p><br>
+                                        <hr> {% if profile.address %}
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>Address :</b></span> <span style="float:right">{{profile.address}}</span></p><br>
+                                        <hr> {% endif %} {% if profile.city %}
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>City :</b></span> <span style="float:right">{{profile.city}}</span></p><br>
+                                        <hr> {% endif %} {% if profile.state %}
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>State :</b></span> <span style="float:right">{{profile.state}}</span></p><br>
+                                        <hr> {% endif %} {% if profile.country %}
+                                        <p style="font-size:16px;" class="mb-0"><span style="float:left"><b>Country :</b></span> <span style="float:right">{{profile.country}}</span></p><br>
+                                        <hr> {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="card" style="text-align:center;">
+
+                                    <div style="background: white;border-radius:7px;padding:10px;height:150px" style="font-size:18px" class="card-body">
+                                        <h5 style="margin-top:30px;font-size:23px; color: black;" class="card-title">Total Orders</h5>
+                                        <h4 style="font-size:25px; color: black;">{{orders_count}}</h4>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <br>
+
+                        </div>
+                    </div>
+
+                </article>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <br>
+
+</section>
+
+
+<!-- ========================= SECTION CONTENT END// ========================= -->
+{% endblock content %}

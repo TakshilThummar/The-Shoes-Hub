@@ -1,0 +1,265 @@
+{% extends '../../base.html' %} {% load static %} {% block title %}Search{% endblock title %} {% block content %}
+
+<!-- pages-title-start -->
+{% if not products_count %}
+
+<div style="font-size:18px; margin-bottom:300px;margin-top:30px" class="container alert alert-info text-center" role="alert">
+
+    <b>No Results,&nbsp;&nbsp;
+        <a href="{% url 'shop:shop' %}" style="color:#21094e;text-decoration: underline;">Go To Shop</a>
+    </b>
+
+</div>
+
+{% else %}
+
+<div class="pages-title section-padding" style="background-color: white;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="pages-title-text text-center">
+                    <h2 style="text-transform: capitalize;color:black; padding-bottom: 30px;">Search Results</h2>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- pages-title-end -->
+
+<!-- shop content section start -->
+<div style="background:#f5f5f5; box-shadow: 0 0 10px black; margin-bottom: 40px;" class="pages products-page section-padding text-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="right-products">
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="section-title clearfix" style="background-color: white; box-shadow: 0 0 2px black;">
+
+                                <ul>
+                                    <li style="color:black; font-size:18px;" class="sort-by floatright">
+                                        {{ products_count }} Results
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="grid-content">
+
+                            {% for product in products %}
+
+                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                <div style="background:#40394a" class="single-product">
+
+                                    <div class="product-img">
+
+                                        {% if product.discount != 0.00 %}
+
+                                        <div class="pro-type">
+                                            <span>Discount</span>
+                                        </div>
+
+                                        {% endif %} {% if product.new %}
+
+                                        <div style="background:red" class="pro-type">
+                                            <span>New</span>
+                                        </div>
+
+                                        {% endif %}
+
+                                        <a href="{{ product.get_prodcut_details_url }}">
+                                            <img style="width:100%; height:350px" src="{{ product.image.url }}" alt="Product Title" />
+                                        </a>
+
+                                        <div class="actions-btn">
+                                            <a href="{% url 'cart:add_cart' product.id %}"><i class="mdi mdi-cart"></i></a>
+                                            <a href="{{ product.get_prodcut_details_url }}"><i class="mdi mdi-eye"></i></a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="product-dsc" style="background-color: white;">
+
+                                        <p><a style="color:black; line-height: 30px;" href="{{ product.get_prodcut_details_url }}">{{ product.name }}</a></p>
+
+                                        <span>${{ product.price }}</span><br>
+                                        <span style="margin-bottom: -20px; font-size: 18px;">{{ product.description }}</span><br><br>
+
+                                        <div style="font-size:16px" class="rating-star">
+                                            <span>
+                                                <i class="fa fa-star{% if product.averageRating < 0.5 %}-o{% elif product.averageRating < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageRating < 1.5 %}-o{% elif product.averageRating < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageRating < 2.5 %}-o{% elif product.averageRating < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageRating < 3.5 %}-o{% elif product.averageRating < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageRating < 4.5 %}-o{% elif product.averageRating < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+                                                &nbsp;<span style="font-size:20px; color: rgb(101, 100, 100); ">(<b>{{ product.countReview }}</b> reviews)</span>
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const descriptions = document.querySelectorAll('.product-dsc span, .list-text p');
+
+        descriptions.forEach(desc => {
+            desc.style.overflow = 'hidden';
+            desc.style.display = '-webkit-box';
+            desc.style.webkitLineClamp = '4'; // Limit to 4 lines
+            desc.style.webkitBoxOrient = 'vertical';
+            desc.style.textOverflow = 'ellipsis';
+            desc.style.lineHeight = '1.4em';
+            desc.style.maxHeight = '5.6em'; // 4 lines * 1.4em
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const titleElements = document.querySelectorAll('.product-dsc p a, .list-text h3');
+
+        // Step 1: Measure line count for each title
+        let maxLines = 0;
+        titleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxLines) {
+                maxLines = lines;
+            }
+        });
+
+        // Step 2: Set all titles to the same height (max lines) and center content
+        titleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const blogPosts = document.querySelectorAll('.blog-post');
+        const blogTitleElements = document.querySelectorAll('.s-blog-text h4 a');
+
+        let maxTitleLines = 0;
+        let maxBlogHeight = 0;
+
+        // Step 1: Determine max lines in any title
+        blogTitleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxTitleLines) {
+                maxTitleLines = lines;
+            }
+        });
+
+        // Step 2: Set all titles to same height and center text
+        blogTitleElements.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxTitleLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+
+        // Step 3: Determine the tallest blog card
+        blogPosts.forEach(post => {
+            const height = post.offsetHeight;
+            if (height > maxBlogHeight) {
+                maxBlogHeight = height;
+            }
+        });
+
+        // Step 4: Set all blog cards to same height
+        blogPosts.forEach(post => {
+            post.style.height = maxBlogHeight + 'px';
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const productCards = document.querySelectorAll('.featured-product');
+        const productTitles = document.querySelectorAll('.product-dsc p:first-child a');
+
+        let maxTitleLines = 0;
+        let maxCardHeight = 0;
+
+        // Step 1: Find max lines used by any title
+        productTitles.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const height = el.offsetHeight;
+            const lines = Math.round(height / lineHeight);
+            if (lines > maxTitleLines) maxTitleLines = lines;
+        });
+
+        // Step 2: Force all titles to use same height + center
+        productTitles.forEach(el => {
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const targetHeight = lineHeight * maxTitleLines;
+
+            el.style.display = 'flex';
+            el.style.flexDirection = 'column';
+            el.style.justifyContent = 'center';
+            el.style.alignItems = 'center';
+            el.style.textAlign = 'center';
+            el.style.height = targetHeight + 'px';
+            el.style.overflow = 'hidden';
+            el.style.textOverflow = 'ellipsis';
+        });
+
+        // Step 3: Set same height for all product cards
+        productCards.forEach(card => {
+            const height = card.offsetHeight;
+            if (height > maxCardHeight) maxCardHeight = height;
+        });
+
+        productCards.forEach(card => {
+            card.style.height = maxCardHeight + 'px';
+        });
+    });
+</script>
+
+<!-- shop content section end -->
+
+{% endif %} {% endblock %}
